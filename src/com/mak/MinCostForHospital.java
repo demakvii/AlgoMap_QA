@@ -8,16 +8,38 @@ import java.util.List;
 public class MinCostForHospital {
 
     public static void main(String[] args) {
-        int n = 3;
         long[] cost = {1, 3, 5};
         int[][] edges = {
                 {1, 2}
                 ,{2, 3}
                 ,{1, 3}
         };
+        calculate(cost, edges);
 
+        cost = new long[] {14, 14, 6, 12, 14, 10, 11, 15, 7, 6, 7, 14, 10};
+        edges = new int[][]{
+                {4, 12}
+                ,{2, 11}
+                ,{4, 7} // ?3
+                ,{5, 12}
+                ,{9, 3}
+                ,{2, 5}
+                ,{7, 11}
+                ,{11, 10}
+                ,{9, 13}
+                ,{4, 9}
+                ,{11, 1}
+                ,{9, 10}
+                ,{4, 2}
+                ,{8, 4}
+        };
+
+        calculate(cost, edges);
+    }
+
+    private static void calculate(long [] cost, int [][] edges){
         List<List<Integer>> adj = new ArrayList<>();
-
+        int n = cost.length;
         for(int i = 0; i < n; i++){
             adj.add(new ArrayList<>());
         }
