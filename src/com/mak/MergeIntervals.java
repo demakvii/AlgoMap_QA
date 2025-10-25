@@ -7,13 +7,13 @@ import java.util.List;
 
 public class MergeIntervals {
     public static void main(String[] args) {
-        System.out.println(Arrays.deepToString(merge(new int[][]{{1, 3}, {2, 6}, {8, 10}, {15, 18}})));
+        System.out.println(Arrays.deepToString(mergeOptimized(new int[][]{{1, 3}, {2, 6}, {8, 10}, {15, 18}})));
         System.out.println("----------");
-        System.out.println(Arrays.deepToString(merge(new int[][]{{1, 4}, {4, 5}})));
+        System.out.println(Arrays.deepToString(mergeOptimized(new int[][]{{1, 4}, {4, 5}})));
         System.out.println("----------");
-        System.out.println(Arrays.deepToString(merge(new int[][]{{1, 4}, {0, 4}})));
+        System.out.println(Arrays.deepToString(mergeOptimized(new int[][]{{1, 4}, {0, 4}})));
         System.out.println("----------");
-        System.out.println(Arrays.deepToString(merge(new int[][]{{1, 4}, {2, 3}})));
+        System.out.println(Arrays.deepToString(mergeOptimized(new int[][]{{1, 4}, {2, 3}})));
     }
 
 
@@ -38,6 +38,27 @@ public class MergeIntervals {
             if(i == intervals.length){
                 result.add(new int[]{Math.min(nxtStart, start), end});
             }
+        }
+        return result.toArray(new int[0][0]);
+    }
+
+    public static int[][] mergeOptimized(int[][] intervals) {
+        Arrays.sort(intervals, Comparator.comparingInt(o -> o[0]));
+        List<int[]> result = new ArrayList<>();
+
+        result.add(intervals[0]);
+
+        for(int i = 1 ; i < intervals.length; i++) {
+            int currStart = intervals[i][0];
+            int currEnd = intervals[i][1];
+            int previousStart = result.get(result.size() - 1)[0];
+            int previousEnd = result.get(result.size() - 1)[1];
+
+            if(previousEnd >= currStart){
+                result.set(result.size() - 1, new int[] {Math.min(currStart, previousStart),
+                        Math.max(currEnd, previousEnd)});
+            }
+            else result.add(new int[] {currStart, currEnd});
         }
         return result.toArray(new int[0][0]);
     }
